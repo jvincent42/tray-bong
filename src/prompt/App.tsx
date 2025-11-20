@@ -62,13 +62,23 @@ function Message({
       <div
         className={twMerge(
           'markdown-content rounded-2xl px-4 py-3 leading-6 wrap-break-word',
-          isUser && 'rounded-br-sm bg-blue-500/20',
-          isAssistant && 'rounded-bl-sm bg-white/10',
+          isUser && 'rounded-br-sm',
+          isAssistant && 'rounded-bl-sm',
           !showActivityIndicator && 'select-text',
         )}
+        style={{
+          backgroundColor: isUser
+            ? 'var(--color-bg-message-user)'
+            : 'var(--color-bg-message-assistant)',
+        }}
       >
         {showActivityIndicator ? (
-          <span className="inline-block animate-pulse text-white/60">●</span>
+          <span
+            className="inline-block animate-pulse"
+            style={{ color: 'var(--color-text-muted)' }}
+          >
+            ●
+          </span>
         ) : (
           <ReactMarkdown>{textContent}</ReactMarkdown>
         )}
@@ -244,17 +254,23 @@ export default function App() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="shrink-0 border-b border-white/10 p-4">
+      <div
+        className="shrink-0 p-4"
+        style={{ borderBottom: '1px solid var(--color-border)' }}
+      >
         <h1 className="w-fit text-xl font-semibold no-app-drag">{label}</h1>
         {systemPrompt.trim() !== '' && (
           <button
-            className={twMerge(
-              'mt-1 block text-left text-xs transition-colors no-app-drag',
-              !showSystemPrompt &&
-                'max-w-1/2 overflow-hidden text-ellipsis whitespace-nowrap text-black/30 hover:text-black/50',
-              showSystemPrompt &&
-                'max-w-full whitespace-pre-wrap text-black/40 hover:text-black/60',
-            )}
+            className="mt-1 block text-left text-xs transition-colors no-app-drag"
+            style={{
+              color: showSystemPrompt
+                ? 'var(--color-text-secondary)'
+                : 'var(--color-text-muted)',
+              maxWidth: showSystemPrompt ? '100%' : '50%',
+              overflow: showSystemPrompt ? 'visible' : 'hidden',
+              textOverflow: showSystemPrompt ? 'clip' : 'ellipsis',
+              whiteSpace: showSystemPrompt ? 'pre-wrap' : 'nowrap',
+            }}
             type="button"
             onClick={() => {
               setShowSystemPrompt(!showSystemPrompt);
@@ -268,14 +284,24 @@ export default function App() {
         )}
       </div>
       {streamingError !== null && (
-        <div className="shrink-0 border-b border-red-500/20 bg-red-500/20 px-4 py-3 no-app-drag">
+        <div
+          className="shrink-0 px-4 py-3 no-app-drag"
+          style={{
+            borderBottom: '1px solid rgba(239, 68, 68, 0.2)',
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          }}
+        >
           <div className="flex items-center gap-3">
-            <div className="flex-1 text-xs text-red-700 select-text">
+            <div
+              className="flex-1 text-xs select-text"
+              style={{ color: 'rgb(185, 28, 28)' }}
+            >
               {streamingError}
             </div>
             <button
               aria-label="Dismiss error"
-              className="shrink-0 rounded px-2 py-1 text-xs text-red-700 transition-colors hover:bg-red-500/20"
+              className="shrink-0 rounded px-2 py-1 text-xs transition-colors"
+              style={{ color: 'rgb(185, 28, 28)' }}
               type="button"
               onClick={() => {
                 setStreamingError(null);
@@ -286,24 +312,39 @@ export default function App() {
           </div>
         </div>
       )}
-      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto bg-white/20 p-4 no-app-drag">
+      <div
+        className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto p-4 no-app-drag"
+        style={{ backgroundColor: 'var(--color-bg-chat)' }}
+      >
         {messagesElements}
         <div ref={messagesEndRef} />
       </div>
       <form
-        className="shrink-0 border-t border-white/10 p-4"
+        className="shrink-0 p-4"
+        style={{ borderTop: '1px solid var(--color-border)' }}
         onSubmit={handleSubmit}
       >
         <div className="flex gap-2">
           <textarea
             ref={inputRef}
-            className="max-h-60 flex-1 resize-none overflow-y-auto rounded-3xl border border-white/20 bg-white/5 px-4 py-3 text-[0.95rem] transition-[border-color] duration-200 outline-none no-app-drag focus:border-blue-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="max-h-60 flex-1 resize-none overflow-y-auto rounded-3xl px-4 py-3 text-[0.95rem] transition-[border-color] duration-200 outline-none no-app-drag disabled:cursor-not-allowed disabled:opacity-50"
+            style={{
+              border: '1px solid var(--color-border)',
+              backgroundColor: 'var(--color-bg-secondary)',
+              color: 'var(--color-text-primary)',
+            }}
             disabled={status === 'streaming' || status === 'submitted'}
             placeholder="Type your message..."
             rows={input.split('\n').length}
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = 'var(--color-border-focus)';
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = 'var(--color-border)';
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
@@ -314,13 +355,27 @@ export default function App() {
             }}
           />
           <button
-            className="cursor-pointer rounded-3xl border-none bg-blue-500/30 px-6 py-3 text-[0.95rem] font-medium transition-[background] duration-200 no-app-drag hover:bg-blue-500/40 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-blue-500/30"
+            className="cursor-pointer rounded-3xl border-none px-6 py-3 text-[0.95rem] font-medium transition-[background] duration-200 no-app-drag disabled:cursor-not-allowed disabled:opacity-50"
+            style={{
+              backgroundColor: 'var(--color-button-primary)',
+              color: 'white',
+            }}
             disabled={
               status === 'streaming' ||
               status === 'submitted' ||
               input.trim() === ''
             }
             type="submit"
+            onMouseEnter={(e) => {
+              if (!e.currentTarget.disabled) {
+                e.currentTarget.style.backgroundColor =
+                  'var(--color-button-primary-hover)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor =
+                'var(--color-button-primary)';
+            }}
           >
             {status === 'streaming' ? 'Stop' : 'Send'}
           </button>

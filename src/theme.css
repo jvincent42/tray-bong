@@ -1,0 +1,57 @@
+/* Shared color scheme variables */
+:root {
+  /* Light mode (default) */
+  --color-bg-primary: rgb(255, 255, 255);
+  --color-bg-secondary: rgb(245, 245, 245);
+  --color-bg-chat: rgb(240, 240, 240);
+  --color-bg-input: rgb(255, 255, 255);
+  --color-bg-message-user: rgba(59, 130, 246, 0.2);
+  --color-bg-message-assistant: rgba(229, 231, 235, 0.8);
+  --color-text-primary: rgb(17, 24, 39);
+  --color-text-secondary: rgb(107, 114, 128);
+  --color-text-muted: rgb(156, 163, 175);
+  --color-border: rgb(229, 231, 235);
+  --color-border-focus: rgb(59, 130, 246);
+  --color-code-bg: rgb(31, 41, 55);
+  --color-code-inline-bg: rgb(243, 244, 246);
+  --color-link: rgb(37, 99, 235);
+  --color-button-primary: rgb(59, 130, 246);
+  --color-button-primary-hover: rgb(37, 99, 235);
+  --color-button-secondary: rgb(255, 255, 255);
+  --color-button-secondary-hover: rgb(249, 250, 251);
+  --color-button-secondary-border: rgb(209, 213, 219);
+  --color-button-secondary-text: rgb(55, 65, 81);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode */
+    --color-bg-primary: rgb(17, 24, 39);
+    --color-bg-secondary: rgb(31, 41, 55);
+    --color-bg-chat: rgb(24, 33, 47);
+    --color-bg-input: rgb(31, 41, 55);
+    --color-bg-message-user: rgba(37, 99, 235, 0.2);
+    --color-bg-message-assistant: rgba(55, 65, 81, 0.8);
+    --color-text-primary: rgb(243, 244, 246);
+    --color-text-secondary: rgb(209, 213, 219);
+    --color-text-muted: rgb(156, 163, 175);
+    --color-border: rgb(55, 65, 81);
+    --color-border-focus: rgb(96, 165, 250);
+    --color-code-bg: rgb(17, 24, 39);
+    --color-code-inline-bg: rgb(55, 65, 81);
+    --color-link: rgb(96, 165, 250);
+    --color-button-primary: rgb(37, 99, 235);
+    --color-button-primary-hover: rgb(59, 130, 246);
+    --color-button-secondary: rgb(55, 65, 81);
+    --color-button-secondary-hover: rgb(75, 85, 99);
+    --color-button-secondary-border: rgb(75, 85, 99);
+    --color-button-secondary-text: rgb(243, 244, 246);
+  }
+}
+
+html,
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+

@@ -124,23 +124,43 @@ export default function App() {
   const needsApiKey = !isOllama;
 
   return (
-    <div className="flex h-full flex-col p-6">
-      <h1 className="mb-6 text-2xl font-bold">Settings</h1>
+    <div
+      className="flex h-full flex-col p-6"
+      style={{ backgroundColor: 'var(--color-bg-primary)' }}
+    >
+      <h1
+        className="mb-6 text-2xl font-bold"
+        style={{ color: 'var(--color-text-primary)' }}
+      >
+        Settings
+      </h1>
 
       <div className="flex flex-1 flex-col gap-4">
         <div>
           <label
-            className="mb-2 block text-sm font-medium text-gray-700"
+            className="mb-2 block text-sm font-medium"
             htmlFor="provider"
+            style={{ color: 'var(--color-text-secondary)' }}
           >
             Provider
           </label>
           <select
-            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+            className="w-full rounded-md px-3 py-2 text-base shadow-sm focus:ring-1 focus:outline-none"
             id="provider"
+            style={{
+              border: '1px solid var(--color-border)',
+              backgroundColor: 'var(--color-bg-input)',
+              color: 'var(--color-text-primary)',
+            }}
             value={provider}
             onChange={(e) => {
               setProvider(e.target.value as Provider);
+            }}
+            onFocus={(e) => {
+              e.currentTarget.style.borderColor = 'var(--color-border-focus)';
+            }}
+            onBlur={(e) => {
+              e.currentTarget.style.borderColor = 'var(--color-border)';
             }}
           >
             <option value="openai">OpenAI</option>
@@ -153,24 +173,42 @@ export default function App() {
         {isOllama ? (
           <div>
             <label
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-sm font-medium"
               htmlFor="model"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               Model
             </label>
             <input
-              className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              className="w-full rounded-md px-3 py-2 text-base shadow-sm focus:ring-1 focus:outline-none"
               id="model"
               placeholder="e.g., llama3.2:1b"
+              style={{
+                border: '1px solid var(--color-border)',
+                backgroundColor: 'var(--color-bg-input)',
+                color: 'var(--color-text-primary)',
+              }}
               type="text"
               value={model}
               onChange={(e) => {
                 setModel(e.target.value);
               }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-border-focus)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-border)';
+              }}
             />
-            <p className="mt-1 text-xs text-gray-500">
+            <p
+              className="mt-1 text-xs"
+              style={{ color: 'var(--color-text-muted)' }}
+            >
               Tip: Run{' '}
-              <code className="rounded bg-gray-100 px-1">
+              <code
+                className="rounded px-1"
+                style={{ backgroundColor: 'var(--color-bg-secondary)' }}
+              >
                 ollama pull llama3.2:1b
               </code>{' '}
               in a shell to download models
@@ -179,17 +217,29 @@ export default function App() {
         ) : (
           <div>
             <label
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-sm font-medium"
               htmlFor="model"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               Model
             </label>
             <select
-              className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              className="w-full rounded-md px-3 py-2 text-base shadow-sm focus:ring-1 focus:outline-none"
               id="model"
+              style={{
+                border: '1px solid var(--color-border)',
+                backgroundColor: 'var(--color-bg-input)',
+                color: 'var(--color-text-primary)',
+              }}
               value={model}
               onChange={(e) => {
                 setModel(e.target.value);
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-border-focus)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-border)';
               }}
             >
               {models.map((m) => (
@@ -204,24 +254,36 @@ export default function App() {
         {needsApiKey && (
           <div>
             <label
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-sm font-medium"
               htmlFor="apiKey"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               API Key
             </label>
             <input
-              className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              className="w-full rounded-md px-3 py-2 text-base shadow-sm focus:ring-1 focus:outline-none"
               id="apiKey"
               placeholder="Enter API key"
+              style={{
+                border: '1px solid var(--color-border)',
+                backgroundColor: 'var(--color-bg-input)',
+                color: 'var(--color-text-primary)',
+              }}
               type="text"
               value={
                 apiKeyFocused || apiKeyEdited
                   ? apiKey
                   : maskApiKey(originalApiKey)
               }
-              onBlur={handleApiKeyBlur}
+              onBlur={(e) => {
+                handleApiKeyBlur();
+                e.currentTarget.style.borderColor = 'var(--color-border)';
+              }}
               onChange={handleApiKeyChange}
-              onFocus={handleApiKeyFocus}
+              onFocus={(e) => {
+                handleApiKeyFocus();
+                e.currentTarget.style.borderColor = 'var(--color-border-focus)';
+              }}
             />
           </div>
         )}
@@ -229,19 +291,31 @@ export default function App() {
         {isOllama && (
           <div>
             <label
-              className="mb-2 block text-sm font-medium text-gray-700"
+              className="mb-2 block text-sm font-medium"
               htmlFor="ollamaEndpoint"
+              style={{ color: 'var(--color-text-secondary)' }}
             >
               Ollama Endpoint
             </label>
             <input
-              className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              className="w-full rounded-md px-3 py-2 text-base shadow-sm focus:ring-1 focus:outline-none"
               id="ollamaEndpoint"
               placeholder="http://localhost:11434"
+              style={{
+                border: '1px solid var(--color-border)',
+                backgroundColor: 'var(--color-bg-input)',
+                color: 'var(--color-text-primary)',
+              }}
               type="text"
               value={ollamaEndpoint}
               onChange={(e) => {
                 setOllamaEndpoint(e.target.value);
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-border-focus)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--color-border)';
               }}
             />
           </div>
@@ -249,14 +323,39 @@ export default function App() {
 
         <div className="mt-4 flex items-center justify-between">
           <button
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-gray-700 shadow-sm transition-colors hover:bg-gray-50"
+            className="rounded-md px-4 py-2 text-base shadow-sm transition-colors"
+            style={{
+              border: '1px solid var(--color-button-secondary-border)',
+              backgroundColor: 'var(--color-button-secondary)',
+              color: 'var(--color-button-secondary-text)',
+            }}
             onClick={handleOpenPromptsFile}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor =
+                'var(--color-button-secondary-hover)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor =
+                'var(--color-button-secondary)';
+            }}
           >
             Reveal Prompts File
           </button>
           <button
-            className="rounded-md bg-blue-500 px-6 py-2 text-base text-white shadow-sm transition-colors hover:bg-blue-600"
+            className="rounded-md px-6 py-2 text-base shadow-sm transition-colors"
+            style={{
+              backgroundColor: 'var(--color-button-primary)',
+              color: 'white',
+            }}
             onClick={handleSave}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor =
+                'var(--color-button-primary-hover)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor =
+                'var(--color-button-primary)';
+            }}
           >
             {saved ? 'Saved!' : 'Save'}
           </button>

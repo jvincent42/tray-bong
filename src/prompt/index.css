@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '../theme.css';
 
 @utility app-drag {
   -webkit-app-region: drag;
@@ -88,7 +89,7 @@ body {
 }
 
 .markdown-content code {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-code-inline-bg);
   padding: 0.125em 0.375em;
   border-radius: 0.25em;
   font-size: 0.9em;
@@ -98,7 +99,7 @@ body {
 }
 
 .markdown-content pre {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: var(--color-code-bg);
   padding: 0.75em;
   border-radius: 0.5em;
   overflow-x: auto;
@@ -114,22 +115,22 @@ body {
 }
 
 .markdown-content blockquote {
-  border-left: 3px solid rgba(255, 255, 255, 0.3);
+  border-left: 3px solid var(--color-border);
   padding-left: 1em;
   margin-left: 0;
   margin-top: 0.75em;
   margin-bottom: 0.75em;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--color-text-secondary);
 }
 
 .markdown-content a {
-  color: rgba(96, 165, 250, 0.9);
+  color: var(--color-link);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .markdown-content a:hover {
-  color: rgba(96, 165, 250, 1);
+  opacity: 0.8;
 }
 
 .markdown-content strong {
@@ -142,7 +143,7 @@ body {
 
 .markdown-content hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--color-border);
   margin: 1em 0;
 }
 
@@ -155,12 +156,12 @@ body {
 
 .markdown-content th,
 .markdown-content td {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-border);
   padding: 0.5em;
   text-align: left;
 }
 
 .markdown-content th {
   font-weight: 600;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--color-bg-secondary);
 }
